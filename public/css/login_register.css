@@ -1,0 +1,93 @@
+
+html, body {
+    background-color: #FEFEFE;
+    color: #2488AA;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+    text-shadow: 2px 3px 5px #000000;
+}
+
+.links > a {
+    color: #FFFFFF;
+    padding: 0 25px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.links > a:hover {
+    color: #000000;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+.nav_box_shadow {
+    box-shadow: #484848 1px 3px 4px !important;
+}
+
+#div_box_login {
+    margin-top: 40px;
+    padding: 0px !important;
+    box-shadow: #484848 1px 3px 4px !important;
+    border-radius: 10px;
+}
+
+#div_box_login .card-body {
+    padding: 20px !important;
+}
+
+.margin-left-fix {
+    margin-left: 15px !important;
+}
+
+#div_buttons_login {
+    padding: 30px;
+    text-align: center;
+}
+
+#div_buttons_login button {
+    width: 120px !important;
+}
+
+#div_buttons_login .bg-dark {
+    background: #210a0a !important;
+}
+
+#div_buttons_login .bg-danger {
+    background: #6d2020 !important;
+}
+

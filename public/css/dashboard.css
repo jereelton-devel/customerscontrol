@@ -1,0 +1,124 @@
+
+body {
+    background-color: #121212;
+    color: #2488AA;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#app-navbar-collapse {
+     float: right;
+     width: auto;
+     max-width: 160px;
+     background: #121240;
+}
+
+#app-navbar-collapse .navbar-nav {
+    margin: auto !important;
+}
+
+#app-navbar-collapse .navbar-nav .dropdown-menu {
+    margin-left: -10px;
+}
+
+.content-header h1 {
+    margin: 2%;
+}
+
+#div_bt_new_user {
+    float: right;
+    margin: 2%;
+    margin-top: -4%
+}
+
+#div_bt_new_user select {
+    padding: 7px;
+    border: none;
+    color: #F89406;
+
+}
+
+#table_users_list {
+    width: 96%;
+    margin: 2%;
+    font-weight: normal;
+    display: none;
+}
+
+#table_users_list th {
+    text-align: center;
+}
+
+#div-pager-users {
+    color: #006699;
+    padding: 20px 0px 10px 0px;
+    text-align: center;
+    margin: 2%;
+}
+
+#div-pager-users #ul-pager-users {
+    list-style: none;
+}
+
+#div-pager-users #ul-pager-users li {
+    display: inline-block;
+    margin: 1px;
+}
+
+#div_lock_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 900;
+    background: #000000;
+    border: none;
+    display: none;
+    top: 0px;
+    opacity: 0.6;
+    left: 0px;
+}
+
+#div_modal_users {
+    width: 40%;
+    height: 70%;
+    margin: 5% 30%;
+    position: fixed;
+    z-index: 1000;
+    color: #888888;
+    background: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    box-shadow: #121212 3px 5px 8px;
+    display: none;
+}
+
+.modal-body p a {
+    width: 120px !important;
+}
+
+.a_close_modal {
+    color: #FFFFFF;
+    font-size: 22px !important;
+}
+
+.a_close_modal:hover {
+    text-decoration: none;
+}
+
+#div_user_profile {
+    margin: 2% !important;
+}
+
+#div_user_profile .links {
+    text-align: right;
+    color: #23272b;
+}
+
+#div_user_profile .links a {
+    color: #23272b;
+}
