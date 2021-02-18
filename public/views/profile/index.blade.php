@@ -1,4 +1,4 @@
-@extends('layouts.profile')
+@extends('layouts.profile_header')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
 
         <div class="col-md-12 col-md-offset-2">
 
-            <div id="div_user_profile" class="card">
+            <div id="div_customer_profile" class="card">
 
                 <div class="card-header bg-dark">Dashboard</div>
 
@@ -28,7 +28,8 @@
                         </div>
                     @endif
 
-                    Você esta logado!
+                    Você esta logado com uma conta limitada !
+
                 </div>
             </div>
         </div>

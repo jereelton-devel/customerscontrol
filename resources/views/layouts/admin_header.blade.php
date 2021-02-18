@@ -79,68 +79,54 @@
     </div>
 
     <div id="div_lock_screen"></div>
-    <div id="div_modal_users" class="modal">
+    <div id="div_modal_customer" class="modal">
         <div class="modal-header bg-dark text-light">
-            Novo Usuário
+            <span id="span_title_modal">Novo Cliente</span>
             <hr />
             <div>
                 <a id="a_close_modal" class="fa fa-close a_close_modal"></a>
             </div>
         </div>
         <div class="modal-body">
+
+            <p>
+                País
+                <select class="input-group" id="select_country_new">
+                </select>
+            </p>
+
             <p>
                 Nome
-                <input type="text" id="username" name="" value="" class="input-group" />
+                <input type="text" id="customer_name" name="" value="" class="input-group" />
             </p>
 
             <p>
                 Email
-                <input type="email" id="usermail" name="" value="" class="input-group" />
-            </p>
-
-            <p>
-                Tipo
-                <select class="input-group" id="usertype">
-                    <option value="">Selecione</option>
-                    <option value="0">Administrador</option>
-                    <option value="0">Suporte</option>
-                    <option value="1">Usuário</option>
-                </select>
+                <input type="email" id="customer_mail" name="" value="" class="input-group" />
             </p>
 
             <p>
                 Genero
-                <select class="input-group" id="usergen">
+                <select class="input-group" id="customer_gen">
                     <option value="">Selecione</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Feminno</option>
-                    <option value="3">Outros</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Nao_informado">Não informado</option>
                 </select>
             </p>
 
             <p>
-                País
-                <select class="input-group" id="usercountry">
-                    <option value="">Selecione um País</option>
-                    <option value="1">Brasil</option>
-                    <option value="2">Russia</option>
-                    <option value="3">EUA</option>
-                    <option value="4">Alemanha</option>
-                </select>
-            </p>
-
-            <p>
-                Senha
-                <input type="password" id="userpass" name="" value="" class="input-group" />
+                Data de Nascimento
+                <input type="date" id="customer_date" name="" value="" class="input-group" />
             </p>
 
             <p style="text-align: center">
-                <a id="a_save_new_user" class="btn btn-success">
+                <a id="a_save_new_customer" class="btn btn-success">
                     <i class="fa fa-save"></i>
                     Salvar
                 </a>
 
-                <a id="a_cancel_new_user" class="btn btn-danger">
+                <a id="a_cancel_new_customer" class="btn btn-danger">
                     <i class="fa fa-ban"></i>
                     Cancelar
                 </a>
