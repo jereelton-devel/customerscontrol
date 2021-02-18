@@ -23,7 +23,7 @@ body {
 }
 
 #app-navbar-collapse .navbar-nav .dropdown-menu {
-    margin-left: -10px;
+    margin-left: -20px !important;
 }
 
 .content-header h1 {

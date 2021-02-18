@@ -135,9 +135,6 @@
         </div>
     </div>
 
-    <!-- App Script -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
     <!-- Plugins -->
     <script src="{{ asset('js/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
     <script src="{{ asset('js/plugins/jQueryUI/jquery-ui.min.js') }}"></script>

@@ -532,6 +532,10 @@ function deleteCustomer(id) {
 
 $(document, "", "").ready(function() {
 
+    $('.dropdown', '', '').unbind().on('click', function() {
+        $('.dropdown-menu', '', '').toggle();
+    });
+
     $("#data-list-customer", "", "").unbind().on('click', function() {
         readCustomer("");
         activeEvents();

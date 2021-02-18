@@ -39,5 +39,41 @@ class CountryTableSeeder extends Seeder
         Country::create([
             'country_name' => 'Israel'
         ]);
+
+        Country::create([
+            'country_name' => 'China'
+        ]);
+
+        Country::create([
+            'country_name' => 'Iraque'
+        ]);
+
+        Country::create([
+            'country_name' => 'Belgica'
+        ]);
+
+        Country::create([
+            'country_name' => 'Argentina'
+        ]);
+
+        Country::create([
+            'country_name' => 'Australia'
+        ]);
+
+        Country::create([
+            'country_name' => 'Japão'
+        ]);
+
+        Country::create([
+            'country_name' => 'India'
+        ]);
+
+        Country::create([
+            'country_name' => 'Bolivia'
+        ]);
+
+        Country::create([
+            'country_name' => 'Canada'
+        ]);
     }
 }
