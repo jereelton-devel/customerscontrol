@@ -1,17 +1,18 @@
 @extends('layouts.login_header')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 
     <div class="row justify-content-center">
 
-        <div id="div_box_login" class="col-md-5">
+        <div id="div_box_login">
 
-            <div class="card bg-dark text-light">
+            <div id="div_login">
 
-                <div class="card-header bg-gray">{{ __('Login') }}</div>
+                <div id="div_header_login">{{ __('Login') }}</div>
 
-                <div class="card-body">
+                <div id="div_body_login">
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -62,11 +63,8 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12" id="div_buttons_login">
-                                <button type="submit" class="btn btn-primary bg-dark">
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('Entrar') }}
-                                </button>
-                                <button type="reset" class="btn btn-danger bg-danger">
-                                    {{ __('Cancelar') }}
                                 </button>
                             </div>
                         </div>

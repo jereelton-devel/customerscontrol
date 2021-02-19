@@ -5,8 +5,8 @@
 </head>
 <body id="body_login">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm nav_box_shadow">
-            <div class="container">
+        <nav id="div_navbar_top" class="navbar navbar-expand-md nav_box_shadow">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -23,9 +23,22 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main id="main_box_login">
             @yield('content')
         </main>
+
+        <section>
+            <div id="div_right_side">
+                <h1>
+                    Business Control
+                    <small>
+                        by JOTICODE
+                    </small>
+                </h1>
+
+            </div>
+        </section>
+
     </div>
 
     @include('helpers.noscript')

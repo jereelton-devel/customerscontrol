@@ -51,7 +51,7 @@
 
 * Paginação de resultados
 
-* Melhorar layout de login
+* [DONE] Melhorar layout de login
 
 * [DONE] Validação de javascript off
 
