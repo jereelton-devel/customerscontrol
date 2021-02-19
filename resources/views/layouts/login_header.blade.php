@@ -42,5 +42,14 @@
         </main>
     </div>
 
+    <!-- Plugins -->
+    <script src="{{ asset('js/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jQueryUI/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/x-alertify/alertify-1.13.1.min.js') }}"></script>
+
+    <!-- Script Especifico -->
+    <script src="{{ asset('js/script.js') }}"></script>
+
 </body>
 </html>
