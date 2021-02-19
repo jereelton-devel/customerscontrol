@@ -7,6 +7,84 @@ var endpointByCountry = "http://joinner.test/api/by_country";
 
 /*Generic Functions*/
 
+function lockerControl() {
+
+    /**
+     * Projeto Name: noback v0.0.1
+     * Description: library for prevent backbutton
+     * Author: Kiko Mesquita (http://twitter.com/kikomesquita) Copyright (c) 2015 @kikomesquita
+     * Comments: Based on stackoverflow
+     * Adapted by: Jereelton Teixeira
+     */
+
+    (function (window) {
+        'use strict';
+
+        var x_back_denied = {
+
+            //globals
+            version: '0.0.1',
+            history_api: typeof history.pushState !== 'undefined',
+
+            init: function () {
+                window.location.hash = '#x-to-lock';
+                x_back_denied.configure();
+            },
+
+            configure: function () {
+                if (window.location.hash == '#x-to-lock') {
+                    if (this.history_api) {
+                        history.pushState(null, '', '#x-padlock');
+                    } else {
+                        window.location.hash = '#x-padlock';
+                    }
+                }
+                x_back_denied.checkCompat();
+                x_back_denied.hasChanged();
+            },
+
+            checkCompat: function () {
+                if (window.addEventListener) {
+                    window.addEventListener("hashchange", x_back_denied.hasChanged, false);
+                } else if (window.attachEvent) {
+                    window.attachEvent("onhashchange", x_back_denied.hasChanged);
+                } else {
+                    window.onhashchange = x_back_denied.hasChanged;
+                }
+            },
+
+            hasChanged: function () {
+                if (window.location.hash == '#x-to-lock') {
+                    window.location.hash = '#x-padlock';
+                    alertify.dialog('alert')
+                        .set({
+                            transition:'zoom',
+                            title: 'Aviso',
+                            message: 'Não é permitido usar esse controle'
+                        }).show();
+                }
+            }
+        };
+
+        // AMD support
+        if (typeof define === 'function' && define.amd) {
+            define(function () {
+                return x_back_denied;
+            });
+        }
+        // For CommonJS and CommonJS-like
+        else if (typeof module === 'object' && module.exports) {
+            module.exports = x_back_denied;
+        } else {
+            window.x_back_denied = x_back_denied;
+        }
+
+        x_back_denied.init();
+
+    }(window));
+
+} lockerControl();
+
 function activeEvents() {
 
     $("[data-delete-customer]", "", "").unbind().on('click', function (e) {
@@ -572,79 +650,5 @@ $(document, "", "").ready(function() {
 
     /*TODO: Paginador Personalizado*/
     createPager('customer', 10, 10, 10, 10);
-
-    /**
-     noback v0.0.1
-     library for prevent backbutton
-     Author: Kiko Mesquita: http://twitter.com/kikomesquita
-     Based on stackoverflow
-     * Copyright (c) 2015 @ kikomesquita
-     */
-
-    (function(window) {
-        'use strict';
-
-        var noback = {
-
-            //globals
-            version: '0.0.1',
-            history_api : typeof history.pushState !== 'undefined',
-
-            init:function(){
-                window.location.hash = '#no-back';
-                noback.configure();
-            },
-
-            hasChanged:function(){
-                if (window.location.hash == '#no-back' ){
-                    window.location.hash = '#BLOQUEIO';
-                    //mostra mensagem que não pode usar o btn volta do browser
-                    if($( "#msgAviso" ).css('display') =='none'){
-                        $( "#msgAviso" ).slideToggle("slow");
-                    }
-                }
-            },
-
-            checkCompat: function(){
-                if(window.addEventListener) {
-                    window.addEventListener("hashchange", noback.hasChanged, false);
-                }else if (window.attachEvent) {
-                    window.attachEvent("onhashchange", noback.hasChanged);
-                }else{
-                    window.onhashchange = noback.hasChanged;
-                }
-            },
-
-            configure: function(){
-                if ( window.location.hash == '#no-back' ) {
-                    if ( this.history_api ){
-                        history.pushState(null, '', '#BLOQUEIO');
-                    }else{
-                        window.location.hash = '#BLOQUEIO';
-                        //mostra mensagem que não pode usar o btn volta do browser
-                        if($( "#msgAviso" ).css('display') =='none'){
-                            $( "#msgAviso" ).slideToggle("slow");
-                        }
-                    }
-                }
-                noback.checkCompat();
-                noback.hasChanged();
-            }
-
-        };
-
-        // AMD support
-        if (typeof define === 'function' && define.amd) {
-            define( function() { return noback; } );
-        }
-        // For CommonJS and CommonJS-like
-        else if (typeof module === 'object' && module.exports) {
-            module.exports = noback;
-        }
-        else {
-            window.noback = noback;
-        }
-        noback.init();
-    }(window));
 
 });

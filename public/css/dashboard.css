@@ -1,16 +1,4 @@
 
-body {
-    background-color: #121212;
-    color: #2488AA;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 900;
-    height: 100vh;
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 #app-navbar-collapse {
      float: right;
      width: auto;

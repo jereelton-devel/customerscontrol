@@ -1,11 +1,6 @@
 
-html, body {
-    background-color: #FEFEFE;
-    color: #2488AA;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 900;
-    height: 100vh;
-    margin: 0;
+#body_login {
+    background: #adb5bd !important;
 }
 
 .full-height {
@@ -56,14 +51,14 @@ html, body {
 }
 
 .nav_box_shadow {
-    box-shadow: #484848 1px 3px 4px !important;
+    box-shadow: #232323 1px 3px 4px !important;
 }
 
 #div_box_login {
     margin-top: 40px;
     padding: 0px !important;
-    box-shadow: #484848 1px 3px 4px !important;
-    border-radius: 10px;
+    /*box-shadow: #484848 1px 3px 4px !important;
+    border-radius: 10px;*/
 }
 
 #div_box_login .card-body {

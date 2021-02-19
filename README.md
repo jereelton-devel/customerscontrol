@@ -43,13 +43,19 @@
 
 <h2>Bugs</h2>
 
-* <strong>[NÃO RESOLVIDO]</strong> : Botão de voltar do browser esta fazendo cache da pagina mesmo após o logout
+* <strong>[RESOLVIDO]</strong> : Botão de voltar do browser esta fazendo cache da pagina mesmo após o logout
 
 <hr />
 
 <h2>TODO</h2>
 
 * Paginação de resultados
+
+* Melhorar layout de login
+
+* [DONE] Validação de javascript off
+
+* [DONE] Bloqueio de botão voltar
 
 <hr />
 
