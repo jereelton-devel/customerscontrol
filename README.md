@@ -49,7 +49,9 @@
 
 <h2>TODO</h2>
 
-* Paginação de resultados
+* Configurar paginador de acordo com os recursos do sistema, filtro por pais e manter o indice de paginação durante a navegação
+
+* [DONE] Paginação de resultados
 
 * [DONE] Melhorar layout de login
 

@@ -36,6 +36,7 @@
     margin: 2%;
     font-weight: normal;
     display: none;
+    text-align: left;
 }
 
 #table_customer_list th {
@@ -45,7 +46,7 @@
 #div-pager-customer {
     color: #006699;
     padding: 20px 0px 10px 0px;
-    text-align: center;
+    text-align: center !important;
     margin: 2%;
 }
 
@@ -113,4 +114,54 @@
 
 #customer_date {
     height: 30px;
+}
+
+.pointer {
+    cursor: pointer !important;
+    font-size: 15px;
+    font-weight: normal;
+    color: #898989;
+}
+
+.pointer_first,
+.pointer_last {
+    cursor: pointer !important;
+    font-size: 15px;
+    font-weight: normal;
+    color: #898989;
+    width: 100px;
+}
+
+.total_results {
+    background: none !important;
+    width: 100px;
+    text-align: left;
+    color: #888888;
+    padding-left: 15px;
+    font-size: 22px;
+}
+
+#div-pager-info {
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    color: #888888;
+    font-weight: normal;
+    margin-top: -15px;
+}
+
+/*Replace bootstrap style*/
+
+.pagination {
+    display: block !important;
+}
+
+li.page-item {
+    background: #bebebe;
+}
+
+.page-item.active .page-link {
+    color: #908787;
+    background-color: #bdc2c6;
+    border-color: #c4cad0;
 }

@@ -24,7 +24,7 @@ class CustomerController extends Controller
                 ->join('countries', 'customers.country_id', '=', 'countries.id')
                 ->select('customers.*', 'countries.country_name')
                 ->orderBy('customers.id')
-                ->get();
+                ->paginate(5);
 
             if ($customers) {
                 return $customers;

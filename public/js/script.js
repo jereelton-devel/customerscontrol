@@ -135,47 +135,83 @@ function activeEvents() {
     });
 }
 
-/*TODO: Configurar Paginador Personalizado*/
-function createPager(el, total, item, itens, limit) {
+function createPager(args) {
 
-    var currentIten = 0;
-    var pagerTotal = Math.ceil(total / itens);
-    var itensSide = Math.floor(limit / 2);
-    var pagerTarget = $("#ul-pager-"+el);
+    //Pagina atual
+    var currentPage = 0;
 
+    //Total de paginas
+    var pagerTotal = args._last_page;
+
+    //Quantidade de itens de cada lado da page atual
+    var qtyItemsEachSide = Math.floor(args._max_pager / 2);
+
+    //Elemento alvo para mostrar o pagiandor e informações
+    var pagerTarget = $(args._target);
+    var pagerTargetInfo = $(args.pager_info);
+
+    //Flush no paginador
     pagerTarget.html('');
 
-    //Primeiro Restultado
-    pagerTarget.append("<li class='page-item'><a class='page-link pointer' data-item-value-"+el+"='"+currentIten+"'>Primeira</a></li>");
+    //Acesso a Primeira Page
+    pagerTarget.append("" +
+        "<li class='page-item'>" +
+            "<a class='page-link pointer_first' data-paginate-result data-content='"+currentPage+"'>" +
+                "Primeira" +
+            "</a>" +
+        "</li>");
 
-    for(var k = (item - itensSide); k <= (item - 1); k++) {
+    //Processa o lado esquerdo do paginador, antes do item atual (active)
+    for(var k = (args._page - qtyItemsEachSide); k <= (args._page - 1); k++) {
 
-        if(k >= 0) {
-            currentIten = k + 1;
-            pagerTarget.append("<li class='page-item'><a class='page-link pointer' data-item-value-"+el+"='"+k+"'>"+currentIten+"</a></li>");
+        if(k >= 1) {
+            currentPage = k;
+            pagerTarget.append("" +
+                "<li class='page-item'>" +
+                    "<a class='page-link pointer' data-paginate-result data-content='"+currentPage+"'>" +
+                        currentPage +
+                    "</a>" +
+                "</li>");
         }
     }
+
+    currentPage++;
 
     //Item Atual
-    pagerTarget.append("<li class='page-item active'><a class='page-link pointer' data-item-value-"+el+"='"+item+"'>"+(currentIten+1)+"</a></li>");
+    pagerTarget.append("" +
+        "<li class='page-item active'>" +
+            "<a class='page-link pointer' data-paginate-result data-content='"+currentPage+"'>" +
+                currentPage +
+            "</a>" +
+        "</li>");
 
-    for(var k = (item + 1); k <= (item + itensSide); k++) {
+    //Processa o lado direito do paginador, apos o item atual (active)
+    for(var k = (args._page + 1); k <= (args._page + qtyItemsEachSide); k++) {
 
-        if(k < pagerTotal) {
-            currentIten = k + 1;
-            pagerTarget.append("<li class='page-item'><a class='page-link pointer' data-item-value-"+el+"='"+k+"'>"+currentIten+"</a></li>");
+        if(k <= pagerTotal) {
+            currentPage = k;
+            pagerTarget.append("" +
+                "<li class='page-item'>" +
+                    "<a class='page-link pointer' data-paginate-result data-content='"+k+"'>"+ k +"</a>" +
+                "</li>");
         }
     }
 
-    //Ultimo Restultado
-    pagerTarget.append("<li class='page-item'><a class='page-link pointer' data-item-value-"+el+"='"+(pagerTotal-1)+"'>Ultima</a></li>");
+    //Acesso a Ultima Page
+    pagerTarget.append("" +
+        "<li class='page-item'>" +
+            "<a class='page-link pointer_last' data-paginate-result data-content='"+(pagerTotal)+"'>" +
+                "Ultima" +
+            "</a>" +
+        "</li>");
 
-    $("[data-item-value-"+el+"]").on('click', function(e){
-        if(el === 'openbuy') {
-            openBuyPagination($(this).data('itemValueOpenbuy'));
-        }
-        if(el === 'morebuy') {
-            moreBuyPagination($(this).data('itemValueMorebuy'));
+    //Mostra o total de resultados
+    pagerTargetInfo.html(args._total_items + " registro(s) encontrado(s)");
+
+    //Ativa evento de paginação
+    $("[data-paginate-result]").on('click', function(e){
+        if(args._page != $(this).data().content) {
+            readCustomer("", $(this).data().content);
         }
     });
 
@@ -377,12 +413,16 @@ function createCustomer() {
 }
 
 //Read
-function readCustomer(country) {
+function readCustomer(country, page) {
 
     let endpoint = endpointCustomer;
 
     if(country) {
         endpoint = endpointByCountry + "/" + country;
+    }
+
+    if(page) {
+        endpoint = endpointCustomer + "?page=" + page;
     }
 
     $.ajax({
@@ -405,7 +445,7 @@ function readCustomer(country) {
 
             $("#tbody_customer_list", "", "").html('');
 
-            if(json.length == 0) {
+            if(json.data.length == 0) {
                 alertify.error("Nada encontrado");
                 return false;
             }
@@ -415,7 +455,7 @@ function readCustomer(country) {
                 return false;
             }
 
-            $.each(json, function (i, obj) {
+            $.each(json.data, function (i, obj) {
 
                 /*Salva os dados do registro para uso posterior*/
                 let data_set_customer =
@@ -455,6 +495,15 @@ function readCustomer(country) {
                                     </a>\
                                 </td>\
                             </tr>');
+            });
+
+            createPager({
+                '_target': '#ul-pager-customer',
+                'pager_info': '#div-pager-info',
+                '_total_items': json.total,
+                '_page': json.current_page,
+                '_last_page': json.last_page,
+                '_max_pager': 6
             });
 
         },
@@ -545,7 +594,7 @@ function updateCustomer(id) {
 
             if(rsp.status == 1) {
                 alertify.success(rsp.message);
-                readCustomer("");
+                readCustomer("", 1);
                 activeEvents();
             } else if(json.status == 2) {
                 _errorAlertify(atob(rsp.message));
@@ -587,7 +636,7 @@ function deleteCustomer(id) {
 
             if(rsp.status == 1) {
                 alertify.success(rsp.message);
-                readCustomer("");
+                readCustomer("", 1);
                 activeEvents();
             } else if(json.status == 2) {
                 _errorAlertify(atob(rsp.message));
@@ -617,10 +666,8 @@ $(document, "", "").ready(function() {
     });
 
     $("#data-list-customer", "", "").unbind().on('click', function() {
-        readCustomer("");
+        readCustomer("", 1);
         activeEvents();
-        /*TODO: Paginador Personalizado*/
-        createPager('customer', 10, 10, 10, 10);
     });
 
     $("#data-create-new-customer", "", "").unbind().on('click', function() {
@@ -640,15 +687,12 @@ $(document, "", "").ready(function() {
 
     $("#select_country_content", "", "").on('change', function(){
         if($(this).val()) {
-            readCustomer($(this).val());
+            readCustomer($(this).val(), "");
         }
     });
 
-    readCustomer("");
+    readCustomer("", "");
     activeEvents();
     readCountries(['select_country_content', 'select_country_new']);
-
-    /*TODO: Paginador Personalizado*/
-    createPager('customer', 10, 10, 10, 10);
 
 });

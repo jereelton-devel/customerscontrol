@@ -47,6 +47,7 @@
 
         <div id="div-pager-customer">
             <ul id="ul-pager-customer" class="pagination"></ul>
+            <div id="div-pager-info"></div>
         </div>
 
     </section>
