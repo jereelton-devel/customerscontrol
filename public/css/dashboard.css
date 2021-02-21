@@ -152,16 +152,31 @@
 
 /*Replace bootstrap style*/
 
-.pagination {
+#div-pager-customer #ul-pager-customer li {
+    margin: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#div-pager-customer .pagination {
     display: block !important;
 }
 
-li.page-item {
-    background: #bebebe;
+#div-pager-customer #ul-pager-customer li.page-item {
+    background: #FFFFFF;
+    border-radius: 20px;
 }
 
-.page-item.active .page-link {
-    color: #908787;
-    background-color: #bdc2c6;
-    border-color: #c4cad0;
+#div-pager-customer #ul-pager-customer .page-link {
+    background-color: #FFFFFF;
+    border: 1px solid #dee2e6;
+    background-color: #e3e3e3;
+    border: 1px solid #a6aeb6;
+    border-radius: 20px;
+}
+
+#div-pager-customer #ul-pager-customer .page-item.active .page-link {
+    color: #fff;
+    background-color: #008eff;
+    border-color: #007fff;
 }

@@ -49,7 +49,13 @@
 
 <h2>TODO</h2>
 
-* Configurar paginador de acordo com os recursos do sistema, filtro por pais e manter o indice de paginação durante a navegação
+* Criar sistema de busca
+
+* Ajustar layout dashboard
+
+* Organizar lib javascript dentro do projeto
+
+* [DONE] Configurar paginador de acordo com os recursos do sistema, filtro por pais e manter o indice de paginação durante a navegação
 
 * [DONE] Paginação de resultados
 

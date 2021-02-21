@@ -29,7 +29,7 @@
             <table id="table_customer_list" class="table table-striped table-hover table-dark">
                 <thead>
                 <tr>
-                    <th style="width: 10px; text-align: center;">#</th>
+                    <th style="width: 10px; text-align: center;">Id</th>
                     <th style="text-align: center;">País</th>
                     <th>Nome</th>
                     <th>Email</th>

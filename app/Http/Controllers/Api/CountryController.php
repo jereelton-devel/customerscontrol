@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CountryController extends Controller
@@ -18,10 +19,10 @@ class CountryController extends Controller
     {
         try {
 
-            $countrys = Country::all();
+            $countries = DB::table('countries')->orderBy('country_name')->get();
 
-            if($countrys) {
-                return $countrys;
+            if($countries) {
+                return $countries;
             }
 
             return errorReturn("listar todos");

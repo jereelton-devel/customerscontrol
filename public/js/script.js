@@ -148,7 +148,7 @@ function createPager(args) {
 
     //Elemento alvo para mostrar o pagiandor e informações
     var pagerTarget = $(args._target);
-    var pagerTargetInfo = $(args.pager_info);
+    var pagerTargetInfo = $(args._pager_info);
 
     //Flush no paginador
     pagerTarget.html('');
@@ -157,8 +157,16 @@ function createPager(args) {
     pagerTarget.append("" +
         "<li class='page-item'>" +
             "<a class='page-link pointer_first' data-paginate-result data-content='"+currentPage+"'>" +
-                "Primeira" +
+                "Inicio" +
             "</a>" +
+        "</li>");
+
+    //Pagina Anterior
+    pagerTarget.append("" +
+        "<li class='page-item'>" +
+        "<a class='page-link pointer' data-paginate-result data-content='"+(args._page-1)+"'>" +
+            "<" +
+        "</a>" +
         "</li>");
 
     //Processa o lado esquerdo do paginador, antes do item atual (active)
@@ -197,21 +205,33 @@ function createPager(args) {
         }
     }
 
+    //Pagina Posterior
+    pagerTarget.append("" +
+        "<li class='page-item'>" +
+        "<a class='page-link pointer' data-paginate-result data-content='"+(args._page+1)+"'>" +
+        ">" +
+        "</a>" +
+        "</li>");
+
     //Acesso a Ultima Page
     pagerTarget.append("" +
         "<li class='page-item'>" +
             "<a class='page-link pointer_last' data-paginate-result data-content='"+(pagerTotal)+"'>" +
-                "Ultima" +
+                "Fim" +
             "</a>" +
         "</li>");
 
-    //Mostra o total de resultados
-    pagerTargetInfo.html(args._total_items + " registro(s) encontrado(s)");
+    if(args._pager_info) {
+        //Mostra informações sobre o resultado
+        pagerTargetInfo.html(
+            "Exibindo resultados de " + args._from_item + " a " + args._to_item + " para " + args._total_items + " encontrado(s)"
+        );
+    }
 
     //Ativa evento de paginação
     $("[data-paginate-result]").on('click', function(e){
         if(args._page != $(this).data().content) {
-            readCustomer("", $(this).data().content);
+            readCustomer($("#select_country_content", "", "").val(), $(this).data().content);
         }
     });
 
@@ -302,6 +322,8 @@ function saveCustomer(id, type) {
 
             function () {
 
+                $("#select_country_content").val($("#select_country_new").val());
+
                 if(type == "new") {//New
                     createCustomer();
                 }
@@ -313,6 +335,7 @@ function saveCustomer(id, type) {
                 flushForm();
                 $("#div_lock_screen", "", "").hide('fast');
                 $("#div_modal_customer", "", "").hide('fade');
+
             },
 
             function () {
@@ -364,6 +387,55 @@ function _errorAlertify(msg_error) {
 
 }
 
+function writeTableResult(target, json) {
+
+    $.each(json.data, function (i, obj) {
+
+        /*Salva os dados do registro para uso posterior*/
+        let data_set_customer =
+            obj.id + ';' +
+            obj.name + ';' +
+            obj.email + ';' +
+            obj.country_id + ';' +
+            obj.gender + ';' +
+            obj.birth_date;
+
+        obj.birth_date = dateView(obj.birth_date);
+        obj.created_at = dateView(obj.created_at);
+        obj.updated_at = dateView(obj.updated_at);
+
+        $(target, "", "")
+            .append('\
+                <tr>\
+                    <td style="text-align: center;">' + obj.id + '</td>\
+                    <td style="text-align: center;">' + obj.country_name + '</td>\
+                    <td>' + obj.name + '</td>\
+                    <td>' + obj.email + '</td>\
+                    <td>' + obj.gender + '</td>\
+                    <td>' + obj.birth_date + '</td>\
+                    <td>' + obj.created_at + '</td>\
+                    <td>' + obj.updated_at + '</td>\
+                    <td style="text-align: center;">\
+                        <a data-edit-customer data-content="' + data_set_customer + '"  class="btn btn-primary btn-xs">\
+                            <i class="fa fa-edit"></i> \
+                            Editar\
+                        </a>\
+                        <a data-lock-customer data-content="' + data_set_customer + '" class="btn btn-outline-secondary btn-xs">\
+                            <i class="fa fa-lock"></i>\
+                            Bloquear\
+                        </a>\
+                        <a data-delete-customer data-content="' + data_set_customer + '"  class="btn btn-danger btn-xs">\
+                            <i class="fa fa-trash"></i>\
+                            Excluir\
+                        </a>\
+                    </td>\
+                </tr>');
+    });
+
+    activeEvents();
+
+}
+
 /*
 *
 * CRUD Requests
@@ -392,8 +464,7 @@ function createCustomer() {
 
             if(rsp.status == 1) {
                 alertify.success(rsp.message);
-                readCustomer("");
-                activeEvents();
+                readCustomer($("#select_country_content").val(), "");
             } else if(rsp.status == 2) {
                 _errorAlertify(atob(rsp.message));
             } else {
@@ -415,13 +486,17 @@ function createCustomer() {
 //Read
 function readCustomer(country, page) {
 
+    console.log(country, page);
+
+    $("#table_customer_list", "", "").fadeOut();
+
     let endpoint = endpointCustomer;
 
-    if(country) {
+    if(country && page) {
+        endpoint = endpointByCountry + "/" + country + "?page=" + page;
+    } else if(country) {
         endpoint = endpointByCountry + "/" + country;
-    }
-
-    if(page) {
+    } else if(page) {
         endpoint = endpointCustomer + "?page=" + page;
     }
 
@@ -455,55 +530,20 @@ function readCustomer(country, page) {
                 return false;
             }
 
-            $.each(json.data, function (i, obj) {
-
-                /*Salva os dados do registro para uso posterior*/
-                let data_set_customer =
-                    obj.id+';'+
-                    obj.name+';'+
-                    obj.email+';'+
-                    obj.country_id+';'+
-                    obj.gender+';'+
-                    obj.birth_date;
-
-                obj.birth_date = dateView(obj.birth_date);
-                obj.created_at = dateView(obj.created_at);
-                obj.updated_at = dateView(obj.updated_at);
-
-                $("#tbody_customer_list", "", "").append('\
-                            <tr>\
-                                <td style="text-align: center;">'+ obj.id +'</td>\
-                                <td style="text-align: center;">'+ obj.country_name +'</td>\
-                                <td>'+ obj.name +'</td>\
-                                <td>'+ obj.email +'</td>\
-                                <td>'+ obj.gender +'</td>\
-                                <td>'+ obj.birth_date +'</td>\
-                                <td>'+ obj.created_at +'</td>\
-                                <td>'+ obj.updated_at +'</td>\
-                                <td style="text-align: center;">\
-                                    <a data-edit-customer data-content="' + data_set_customer + '"  class="btn btn-primary btn-xs">\
-                                        <i class="fa fa-edit"></i> \
-                                        Editar\
-                                    </a>\
-                                    <a data-lock-customer data-content="' + data_set_customer + '" class="btn btn-outline-secondary btn-xs">\
-                                        <i class="fa fa-lock"></i>\
-                                        Bloquear\
-                                    </a>\
-                                    <a data-delete-customer data-content="' + data_set_customer + '"  class="btn btn-danger btn-xs">\
-                                        <i class="fa fa-trash"></i>\
-                                        Excluir\
-                                    </a>\
-                                </td>\
-                            </tr>');
-            });
+            setTimeout(function(){
+                writeTableResult("#tbody_customer_list", json);
+                $("#table_customer_list", "", "").fadeIn();
+            }, 300);
 
             createPager({
                 '_target': '#ul-pager-customer',
-                'pager_info': '#div-pager-info',
+                '_pager_info': '#div-pager-info',
                 '_total_items': json.total,
                 '_page': json.current_page,
                 '_last_page': json.last_page,
-                '_max_pager': 6
+                '_max_pager': 6,
+                '_from_item': json.from,
+                '_to_item': json.to
             });
 
         },
@@ -550,10 +590,10 @@ function readCountries(target) {
 
             for(var k = 0; k < target.length; k++) {
 
-                $("#" + target[k], "", "").html('<option value="">Selecione um pais</option>');
+                $(target[k], "", "").html('<option value="">Selecione um pais</option>');
 
                 $.each(json, function (i, obj) {
-                    $("#" + target[k], "", "").append(
+                    $(target[k], "", "").append(
                         '<option value="' + obj.id + '">' + obj.country_name + '</option>'
                     );
                 });
@@ -594,8 +634,7 @@ function updateCustomer(id) {
 
             if(rsp.status == 1) {
                 alertify.success(rsp.message);
-                readCustomer("", 1);
-                activeEvents();
+                readCustomer($("#select_country_content").val(), 1);
             } else if(json.status == 2) {
                 _errorAlertify(atob(rsp.message));
                 return false;
@@ -636,8 +675,7 @@ function deleteCustomer(id) {
 
             if(rsp.status == 1) {
                 alertify.success(rsp.message);
-                readCustomer("", 1);
-                activeEvents();
+                readCustomer($("#select_country_content").val(), 1);
             } else if(json.status == 2) {
                 _errorAlertify(atob(rsp.message));
                 return false;
@@ -666,8 +704,8 @@ $(document, "", "").ready(function() {
     });
 
     $("#data-list-customer", "", "").unbind().on('click', function() {
-        readCustomer("", 1);
-        activeEvents();
+        flushForm();
+        readCustomer($("#select_country_content", "", "").val(), 1);
     });
 
     $("#data-create-new-customer", "", "").unbind().on('click', function() {
@@ -692,7 +730,6 @@ $(document, "", "").ready(function() {
     });
 
     readCustomer("", "");
-    activeEvents();
-    readCountries(['select_country_content', 'select_country_new']);
+    readCountries(['#select_country_content', '#select_country_new']);
 
 });
